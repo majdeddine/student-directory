@@ -48,6 +48,19 @@ def specific_name_print(names)
   end
   puts "We found #{count} names that start with \"#{first_letter}\""
 end
+# print names shorter than 12 characters
+def specific_length_print(names)
+  puts "Students whose name is shorter than 12 characters"
+  name_length = 12
+  count = 0
+  names.each do |name|
+    if name[:name].length <= name_length
+      puts "#{count+1} #{name[:name]} (#{name[:cohort]} cohort)"
+      count+=1
+    end
+  end
+  puts "We found #{count} names shorter than 12 characters"
+end
 
 def print_footer(names)
   puts "Overall, we have #{names.count} great students"
@@ -56,6 +69,7 @@ end
 students = input_students
 #nothing happens until we call the methods
 print_header
-print(students)
-specific_name_print(students)
+#print(students)
+#specific_name_print(students)
+specific_length_print(students)
 print_footer(students)
