@@ -1,6 +1,3 @@
-# add 2 variable for names that starts with specific letter and have specific length
-$first_letter = "D"
-$name_length = 12
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
@@ -30,11 +27,26 @@ end
 def print(students)
   i=0
   while i < students.length
-    if students[i][:name][0] == $first_letter && students[1][:name].length < $name_length
-    puts "#{i+1}. #{students[i][:name]} (#{students[i][:cohort]} cohort) (hobbie #{students[i][:hobbies]}) (country #{students[i][:country]}) (#{students[i][:height]} height)"
-    end
+
+    puts "#{i+1}. #{students[i][:name]} (#{students[i][:cohort]} cohort) (hobbie #{students[i][:hobbies]}) (country #{students[i][:country]}) (#{students[i][:height]} height)".center(50)
+
     i+=1
   end
+end
+
+# find students names that match the user input
+def specific_name_print(names)
+  puts "Search for students by entering the first letter of their names"
+  first_letter = gets.chomp
+
+  count = 0
+  names.each do |name|
+    if name[:name][0] == first_letter
+      puts "#{count+1} #{name[:name]} (#{name[:cohort]} cohort)"
+      count+=1
+    end
+  end
+  puts "We found #{count} names that start with \"#{first_letter}\""
 end
 
 def print_footer(names)
@@ -45,4 +57,5 @@ students = input_students
 #nothing happens until we call the methods
 print_header
 print(students)
+specific_name_print(students)
 print_footer(students)
