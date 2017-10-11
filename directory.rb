@@ -21,12 +21,15 @@ def print_header
   puts "The students of Villains Academy"
   puts "-------------"
 end
-# print names that starts with specific letter and shorter than 12 characters
+
+# rewrite the each methods using while loop
 def print(students)
-  students.each_with_index do |student,i|
-    if student[:name][0] == "D" && student[:name].length < 12
-    puts "#{i+1}. #{student[:name]} (#{student[:cohort]} cohort)"
-  end
+  i=0
+  while i < students.length
+    if students[i][:name][0] == "D" && students[1][:name].length < 12
+    puts "#{i+1}. #{students[i][:name]} (#{students[i][:cohort]} cohort)"
+    end
+    i+=1
   end
 end
 
