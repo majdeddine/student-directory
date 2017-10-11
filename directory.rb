@@ -1,17 +1,30 @@
 def input_students
-  puts "Please enter the names of the students"
+  cohorts = [:january, :february, :march, :april, :may, :june, :july,
+  :august, :september, :october, :november, :december]
+  # ask for both name and cohort
+  puts "Please enter the names of the students then their cohort"
   puts "To finish, just hit return twice"
   # create an empty array
   students = []
-  # get the first name
+  # get the first name and the first cohort
   name = gets.chomp
+  cohort = gets.chomp
   # while the name is not empty, repeat this code
   while !name.empty? do
+    if cohort.empty?
+      cohort = "---"
+    else
+      while !cohorts.include?(cohort.downcase.to_sym)
+        puts "Please enter a valid month"
+        cohort = gets.chomp
+      end
+    end
     # add the student hash to the array
-    students << {name: name, cohort: :november, hobbies: "Write DRY code", country: :UK, height: "Over 1m"}
+    students << {name: name , cohort: cohort.to_sym}
     puts "Now we have #{students.count} students"
-    #get another name from user
+    #get another name and cohort from user
     name = gets.chomp
+    cohort = gets.chomp
   end
   # return the array of students
   students
@@ -28,7 +41,7 @@ def print(students)
   i=0
   while i < students.length
 
-    puts "#{i+1}. #{students[i][:name]} (#{students[i][:cohort]} cohort) (hobbie #{students[i][:hobbies]}) (country #{students[i][:country]}) (#{students[i][:height]} height)".center(50)
+    puts "#{i+1}. #{students[i][:name]} (#{students[i][:cohort]} cohort)".center(50)
 
     i+=1
   end
@@ -69,7 +82,7 @@ end
 students = input_students
 #nothing happens until we call the methods
 print_header
-#print(students)
+print(students)
 #specific_name_print(students)
-specific_length_print(students)
+#specific_length_print(students)
 print_footer(students)
