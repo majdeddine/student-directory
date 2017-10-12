@@ -75,6 +75,17 @@ def specific_length_print(names)
   puts "We found #{count} names shorter than 12 characters"
 end
 
+# group students by cohort
+def group_by_cohort(names,cohort)
+   group = names.select{|name| name[:cohort] == cohort  }
+   count = 0
+   group.each do |name|
+     puts "#{count+1} #{name[:name]} (#{name[:cohort]} cohort)"
+     count+=1
+   end
+   puts "We found #{count} students from \"#{cohort}\" cohort"
+end
+
 def print_footer(names)
   puts "Overall, we have #{names.count} great students"
 end
@@ -82,7 +93,8 @@ end
 students = input_students
 #nothing happens until we call the methods
 print_header
-print(students)
+#print(students)
 #specific_name_print(students)
 #specific_length_print(students)
+group_by_cohort(students,:november)
 print_footer(students)
