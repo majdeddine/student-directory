@@ -21,7 +21,7 @@ def input_students
     end
     # add the student hash to the array
     students << {name: name , cohort: cohort.to_sym}
-    puts "Now we have #{students.count} students"
+    puts "Now we have #{students.count} #{student_form(students.count)}"
     #get another name and cohort from user
     name = gets.chomp
     cohort = gets.chomp
@@ -35,8 +35,15 @@ def print_header
   puts "-------------"
 end
 
+# return singular or plural form when appropriate
+def student_form(number)
+  if number == 1
+    return "student"
+  else
+    return "students"
+  end
+end
 # rewrite the each methods using while loop
-
 def print(students)
   i=0
   while i < students.length
@@ -83,18 +90,18 @@ def group_by_cohort(names,cohort)
      puts "#{count+1} #{name[:name]} (#{name[:cohort]} cohort)"
      count+=1
    end
-   puts "We found #{count} students from \"#{cohort}\" cohort"
+   puts "We found #{count} #{student_form(count)} from \"#{cohort}\" cohort"
 end
 
 def print_footer(names)
-  puts "Overall, we have #{names.count} great students"
+  puts "Overall, we have #{names.count} great #{student_form(names.count)}"
 end
 
 students = input_students
 #nothing happens until we call the methods
 print_header
-#print(students)
+print(students)
 #specific_name_print(students)
 #specific_length_print(students)
-group_by_cohort(students,:november)
+#group_by_cohort(students,:november)
 print_footer(students)
