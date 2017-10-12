@@ -7,7 +7,9 @@ def input_students
   # create an empty array
   students = []
   # get the first name and the first cohort
-  name = gets.chomp
+  # use chop instead of chomp
+  name = gets
+  name.chop! if name[-1] == "\n"
   cohort = gets.chomp
   # while the name is not empty, repeat this code
   while !name.empty? do
