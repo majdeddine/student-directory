@@ -7,8 +7,8 @@ def input_students
   puts "Please enter the names of the students then their cohort"
   puts "To finish, just hit return twice"
   # get the first name and the first cohort
-  name = gets.chomp
-  cohort = gets.chomp
+  name = STDIN.gets.chomp
+  cohort = STDIN.gets.chomp
   # while the name is not empty, repeat this code
   while !name.empty? do
     if cohort.empty?
@@ -16,22 +16,22 @@ def input_students
     else
       while !cohorts.include?(cohort.downcase.to_sym)
         puts "Please enter a valid month"
-        cohort = gets.chomp
+        cohort = STDIN.gets.chomp
       end
     end
     # add the student hash to the array
     @students << {name: name , cohort: cohort.to_sym}
     puts "Now we have #{@students.count} #{student_form(@students.count)}"
     #get another name and cohort from user
-    name = gets.chomp
-    cohort = gets.chomp
+    name = STDIN.gets.chomp
+    cohort = STDIN.gets.chomp
   end
 end
 
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
@@ -92,7 +92,7 @@ end
 # find students names that match the user input
 def specific_name_print
   puts "Search for students by entering the first letter of their names"
-  first_letter = gets.chomp
+  first_letter = STDIN.gets.chomp
   count = 0
   @students.each do |name|
     if name[:name][0] == first_letter
@@ -144,8 +144,8 @@ def save_students
   file.close
 end
 
-def load_students
-  file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(",")
     @students << {name: name, cohor: cohort.to_sym}
@@ -153,9 +153,22 @@ def load_students
   file.close
 end
 
+def try_load_students
+  filename = ARGV.first # first argument from the command line
+  return if filename.nil?
+  if File.exist?(filename) # if it exist
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else # if it doesn't exist
+    puts "Sorry, #{filename} doesn't exist."
+    exit # quit the program
+  end
+end
 
 #nothing happens until we call the methods
+
+try_load_students
 interactive_menu
-#specific_name_print
-#specific_length_print
-#group_by_cohort(:november)
+# specific_name_print
+# specific_length_print
+# group_by_cohort(:november)
