@@ -19,8 +19,8 @@ def input_students
         cohort = STDIN.gets.chomp
       end
     end
-    # add the student hash to the array
-    @students << {name: name , cohort: cohort.to_sym}
+    # call append_to_students
+    append_to_students(name, cohort)
     puts "Now we have #{@students.count} #{student_form(@students.count)}"
     #get another name and cohort from user
     name = STDIN.gets.chomp
@@ -148,7 +148,7 @@ def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(",")
-    @students << {name: name, cohor: cohort.to_sym}
+    append_to_students(name, cohort)
   end
   file.close
 end
@@ -163,6 +163,10 @@ def try_load_students
     puts "Sorry, #{filename} doesn't exist."
     exit # quit the program
   end
+end
+
+def append_to_students(name,cohort)
+  @students << {name: name, cohort: cohort.to_sym}
 end
 
 #nothing happens until we call the methods
