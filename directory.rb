@@ -115,8 +115,8 @@ def print_menu
   puts "*************************************************"
   puts "* 1. Input the students                         *"
   puts "* 2. Show the students                          *"
-  puts "* 3. Save the list to students.csv              *"
-  puts "* 4. Load the list from students.csv            *"
+  puts "* 3. Save the list to a file                    *"
+  puts "* 4. Load the list from a file                  *"
   puts "* 5. Show names starting with a specific letter *"
   puts "* 6. Show names shorter than 12 characters      *"
   puts "* 7. Group students by a specific cohort        *"
@@ -139,7 +139,7 @@ def process(selection)
   when "3"
     save_students
   when "4"
-    load_students
+    load_students(name_file)
   when "5"
     specific_name_print
   when "6"
@@ -153,9 +153,19 @@ def process(selection)
   end
 end
 
+def name_file
+  puts "Enter file name"
+  file_name = gets.chomp
+  if file_name[-4..-1] == ".csv"
+    file_name
+  else
+    file_name+=".csv"
+  end
+end
+
 def save_students
   # open the file for writing
-  file = File.open("students.csv", "w")
+  file = File.open(name_file, "w")
   # iterate over the array of students
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
@@ -163,7 +173,7 @@ def save_students
     file.puts csv_line
   end
   file.close
-  puts "Your list has been successfully saved to \"students.csv\""
+  puts "Your list has been successfully saved to \"#{name_file}\""
 end
 
 def load_students(filename = "students.csv")
