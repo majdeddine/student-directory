@@ -163,6 +163,7 @@ def save_students
     file.puts csv_line
   end
   file.close
+  puts "Your list has been successfully saved to \"students.csv\""
 end
 
 def load_students(filename = "students.csv")
@@ -172,6 +173,7 @@ def load_students(filename = "students.csv")
     append_to_students(name,cohort)
   end
   file.close
+  puts "File \"#{filename}\" has been successfully uploaded"
 end
 
 def try_load_students
