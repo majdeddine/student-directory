@@ -36,44 +36,6 @@ def input_students
   end
 end
 
-def interactive_menu
-  loop do
-    print_menu
-    process(STDIN.gets.chomp)
-  end
-end
-
-def print_menu
-  puts "1. Input the students"
-  puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
-  puts "9. Exit"
-end
-
-def show_students
-  print_header
-  print_student_list
-  print_footer
-end
-
-def process(selection)
-  case selection
-  when "1"
-    input_students
-  when "2"
-    show_students
-  when "3"
-    save_students
-  when "4"
-    load_students
-  when "9"
-    exit
-  else
-    puts "I don't know what you mean, try again"
-  end
-end
-
 def print_header
   puts "The students of Villains Academy"
   puts "-------------"
@@ -126,8 +88,10 @@ def specific_length_print
 end
 
 # group students by cohort
-def group_by_cohort(cohort)
-   group = @students.select{|name| name[:cohort] == cohort  }
+def group_by_cohort
+  puts "Enter a cohort"
+  cohort = gets.chomp
+   group = @students.select{|name| name[:cohort].downcase == cohort.downcase.to_sym  }
     count = 0
    group.each do |name|
       puts "#{count+1} #{name[:name]} (#{name[:cohort]} cohort)"
@@ -138,6 +102,55 @@ end
 
 def print_footer
   puts "Overall, we have #{@students.count} great #{student_form(@students.count)}"
+end
+
+def interactive_menu
+  loop do
+    print_menu
+    process(STDIN.gets.chomp)
+  end
+end
+
+def print_menu
+  puts "*************************************************"
+  puts "* 1. Input the students                         *"
+  puts "* 2. Show the students                          *"
+  puts "* 3. Save the list to students.csv              *"
+  puts "* 4. Load the list from students.csv            *"
+  puts "* 5. Show names starting with a specific letter *"
+  puts "* 6. Show names shorter than 12 characters      *"
+  puts "* 7. Group students by a specific cohort        *"
+  puts "* 8. Exit                                       *"
+  puts "*************************************************"
+end
+
+def show_students
+  print_header
+  print_student_list
+  print_footer
+end
+
+def process(selection)
+  case selection
+  when "1"
+    input_students
+  when "2"
+    show_students
+  when "3"
+    save_students
+  when "4"
+    load_students
+  when "5"
+    specific_name_print
+  when "6"
+    specific_length_print
+  when "7"
+    group_by_cohort
+  when "8"
+    exit
+  else
+    puts "I don't know what you mean, try again"
+  end
 end
 
 def save_students
@@ -184,6 +197,3 @@ end
 
 try_load_students
 interactive_menu
-# specific_name_print
-# specific_length_print
-# group_by_cohort(:november)
