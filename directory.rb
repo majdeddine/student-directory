@@ -1,11 +1,19 @@
 @students = []
 
-def input_students
-  cohorts = [:january, :february, :march, :april, :may, :june, :july,
+# list of possible cohorts
+def possible_cohorts
+  [:january, :february, :march, :april, :may, :june, :july,
   :august, :september, :october, :november, :december]
+end
+
+def input_students_header
   # ask for both name and cohort
   puts "Please enter the names of the students then their cohort"
   puts "To finish, just hit return twice"
+end
+
+def input_students
+  input_students_header
   # get the first name and the first cohort
   name = STDIN.gets.chomp
   cohort = STDIN.gets.chomp
@@ -14,13 +22,13 @@ def input_students
     if cohort.empty?
       cohort = "---"
     else
-      while !cohorts.include?(cohort.downcase.to_sym)
+      while !possible_cohorts.include?(cohort.downcase.to_sym)
         puts "Please enter a valid month"
         cohort = STDIN.gets.chomp
       end
     end
     # call append_to_students
-    append_to_students(name, cohort)
+    append_to_students(name,cohort)
     puts "Now we have #{@students.count} #{student_form(@students.count)}"
     #get another name and cohort from user
     name = STDIN.gets.chomp
@@ -148,7 +156,7 @@ def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(",")
-    append_to_students(name, cohort)
+    append_to_students(name,cohort)
   end
   file.close
 end
