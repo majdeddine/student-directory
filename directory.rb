@@ -137,7 +137,7 @@ def process(selection)
   when "2"
     show_students
   when "3"
-    save_students
+    save_students(name_file)
   when "4"
     load_students(name_file)
   when "5"
@@ -156,6 +156,7 @@ end
 def name_file
   puts "Enter file name"
   file_name = gets.chomp
+  file_name = "students.csv" if file_name == ""
   if file_name[-4..-1] == ".csv"
     file_name
   else
@@ -163,27 +164,31 @@ def name_file
   end
 end
 
-def save_students
+def save_students(filename)
   # open the file for writing
-  file = File.open(name_file, "w")
+  File.open(filename, "w") do |file|
   # iterate over the array of students
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort]]
+      csv_line = student_data.join(",")
+      file.puts csv_line
+    end
   end
-  file.close
-  puts "Your list has been successfully saved to \"#{name_file}\""
+  puts "Your list has been successfully saved to \"#{filename}\""
 end
 
 def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(",")
-    append_to_students(name,cohort)
+  if File.exist?(filename)
+    File.open(filename, "r") do |file|
+      file.readlines.each do |line|
+        name, cohort = line.chomp.split(",")
+        append_to_students(name,cohort)
+      end
+    end
+    puts "File \"#{filename}\" has been successfully uploaded"
+  else
+    puts "File \"#{filename}\" does not exist"
   end
-  file.close
-  puts "File \"#{filename}\" has been successfully uploaded"
 end
 
 def try_load_students
