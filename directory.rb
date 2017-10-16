@@ -206,7 +206,17 @@ def append_to_students(name,cohort)
   @students << {name: name, cohort: cohort.to_sym}
 end
 
-#nothing happens until we call the methods
+# small program that reads its own source code
+def read_self
+  File.open($0, "r") do |file|
+   file.each do |line|
+     puts line
+   end
+  end
+end
 
-try_load_students
-interactive_menu
+# nothing happens until we call the methods
+
+# try_load_students
+# interactive_menu
+read_self
