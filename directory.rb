@@ -1,3 +1,4 @@
+require "csv"
 @students = []
 
 # list of possible cohorts
@@ -166,12 +167,10 @@ end
 
 def save_students(filename)
   # open the file for writing
-  File.open(filename, "w") do |file|
+  CSV.open(filename, "w") do |file|
   # iterate over the array of students
     @students.each do |student|
-      student_data = [student[:name], student[:cohort]]
-      csv_line = student_data.join(",")
-      file.puts csv_line
+      file << [student[:name], student[:cohort]]
     end
   end
   puts "Your list has been successfully saved to \"#{filename}\""
@@ -179,11 +178,8 @@ end
 
 def load_students(filename = "students.csv")
   if File.exist?(filename)
-    File.open(filename, "r") do |file|
-      file.readlines.each do |line|
-        name, cohort = line.chomp.split(",")
-        append_to_students(name,cohort)
-      end
+    CSV.foreach(filename) do |name, cohort|
+      append_to_students(name,cohort)
     end
     puts "File \"#{filename}\" has been successfully uploaded"
   else
